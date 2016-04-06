@@ -1,5 +1,7 @@
 ﻿using Clever.Win.Tumblr.Services;
 using Clever.Win.Tumblr.Services.Data;
+using GalaSoft.MvvmLight;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,21 @@ using System.Threading.Tasks;
 
 namespace Clever.Win.Tumblr.ViewModel
 {
-    public class PostViewModel
+    public class PostInfoViewModel : ViewModelBase
     {
-        PageGenerator _pageGenerator = new PageGenerator();
+        IPageGenerator _pageGenerator = ServiceLocator.Current.GetInstance<IPageGenerator>();
 
         private PostDataBase _postData;
+        public PostDataBase PostData
+        {
+            get
+            {
+                return _postData;
+            }
+        }
 
-        public PostViewModel(PostDataBase source)
+
+        public PostInfoViewModel(PostDataBase source)
         {
             _postData = source;
         }
@@ -23,26 +33,28 @@ namespace Clever.Win.Tumblr.ViewModel
         {
             get
             {
-                if (_postData.Type == "photo")
+                if (PostData.Type == "photo")
                 {
-                    var photo = _postData as PhotoPostData;
+                    var photo = PostData as PhotoPostData;
                     return _pageGenerator.CreateWebPagPhotoInfo(0.4f, photo.PhoyoCaption, photo.PhoyoUrl400);
                 }
 
-                if (_postData.Type == "video")
+                if (PostData.Type == "video")
                 {
-                    var video = _postData as VideoPostData;
+                    var video = PostData as VideoPostData;
                     return _pageGenerator.CreateWebPagVideoInfo(0.4f, video.VideoCaption, video.VideoPlayer);
                 }
 
-                if (_postData.Type == "regular")
+                if (PostData.Type == "regular")
                 {
-                    var regular = _postData as RegularPostData;
+                    var regular = PostData as RegularPostData;
                     return _pageGenerator.CreateWebPagRegularInfo(1.2f, regular.RegularTitle, regular.RegularBody);
                 }
 
                 return string.Empty;
             }
         }
+
+       
     }
 }

@@ -1,6 +1,8 @@
+using Clever.Win.Tumblr.Services;
 using Clever.Win.Tumblr.Services.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -26,7 +28,7 @@ namespace Clever.Win.Tumblr.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private Tumblr.Services.TumblrServiceProxy _proxyData = new Services.TumblrServiceProxy();
+        private ITumblrServiceProxy _proxyData = ServiceLocator.Current.GetInstance<ITumblrServiceProxy>();
 
         private Visibility _isLoading = Visibility.Collapsed;
 
@@ -44,9 +46,9 @@ namespace Clever.Win.Tumblr.ViewModel
             }
         }
 
-        private ObservableCollection<PostViewModel> _postCollection = new ObservableCollection<PostViewModel>();
+        private ObservableCollection<PostInfoViewModel> _postCollection = new ObservableCollection<PostInfoViewModel>();
 
-        public ObservableCollection<PostViewModel> PostCollection
+        public ObservableCollection<PostInfoViewModel> PostCollection
         {
             get
             {
@@ -57,6 +59,29 @@ namespace Clever.Win.Tumblr.ViewModel
             {
                 _postCollection = value;
                 RaisePropertyChanged(() => PostCollection);
+            }
+        }
+
+        private PostInfoViewModel _selectedItem;
+
+        public PostInfoViewModel SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+
+            set
+            {
+                if (value == null) return;
+                _selectedItem = value;
+                RaisePropertyChanged(() => SelectedItem);
+                App.PostData = value.PostData;
+                App.RootFrame.Navigate(new Uri("/Views/PostPage.xaml", UriKind.RelativeOrAbsolute));
+
+
+                _selectedItem = null;
+                RaisePropertyChanged(() => SelectedItem);
             }
         }
 
@@ -78,7 +103,9 @@ namespace Clever.Win.Tumblr.ViewModel
 
         public ICommand SearchCommand { get; private set; }
 
-     
+      
+
+
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -117,6 +144,10 @@ namespace Clever.Win.Tumblr.ViewModel
         {
             FeedData feedData = null;
 
+            if (IsLoading == Visibility.Visible) return;
+
+            _postCollection.Clear();
+
             try
             {
                 IsLoading = Visibility.Visible;
@@ -134,7 +165,7 @@ namespace Clever.Win.Tumblr.ViewModel
             foreach (var item in feedData.Posts)
             {
                 if (item.Type == "video") continue;
-                _postCollection.Add(new PostViewModel(item));
+                _postCollection.Add(new PostInfoViewModel(item));
             }
 
             IsLoading = Visibility.Collapsed;

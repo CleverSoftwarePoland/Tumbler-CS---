@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Clever.Win.Tumblr.Services
 {
-    public class TumblrServiceProxy
+    public class TumblrServiceProxy : ITumblrServiceProxy
     {
         public async Task<FeedData> GetProfileData(string user = "qbn-scholar")
         {

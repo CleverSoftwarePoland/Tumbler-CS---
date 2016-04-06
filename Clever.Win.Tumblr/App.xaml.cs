@@ -7,11 +7,14 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Clever.Win.Tumblr.Resources;
+using Clever.Win.Tumblr.Services.Data;
 
 namespace Clever.Win.Tumblr
 {
     public partial class App : Application
     {
+        public static PostDataBase PostData { get; set; }
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -54,6 +57,8 @@ namespace Clever.Win.Tumblr
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            
 
         }
 

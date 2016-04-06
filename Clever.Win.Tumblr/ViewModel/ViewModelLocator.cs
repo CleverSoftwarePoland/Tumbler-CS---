@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Clever.Win.Tumblr.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
@@ -31,17 +32,8 @@ namespace Clever.Win.Tumblr.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
+            SimpleIoc.Default.Register<IPageGenerator, PageGenerator>();
+            SimpleIoc.Default.Register<ITumblrServiceProxy, TumblrServiceProxy>();
             SimpleIoc.Default.Register<MainViewModel>();
         }
 

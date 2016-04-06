@@ -112,12 +112,14 @@
     <Compile Include="Services\Data\PhotoPostData.cs" />
     <Compile Include="Services\Data\VideoPostData.cs" />
     <Compile Include="Services\IPageGenerator.cs" />
+    <Compile Include="Services\ITumblrServiceProxy.cs" />
     <Compile Include="Services\PageGenerator.cs" />
     <Compile Include="Services\TumblrServiceProxy.cs" />
     <Compile Include="Services\WebRequestWrapper.cs" />
     <Compile Include="Services\WebRequestWrapperSettings.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PostViewModel.cs" />
+    <Compile Include="ViewModel\PostInfoViewModel.cs" />
+    <Compile Include="ViewModel\PostPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\PostPage.xaml.cs">
       <DependentUpon>PostPage.xaml</DependentUpon>

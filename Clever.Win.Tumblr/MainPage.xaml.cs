@@ -31,7 +31,7 @@ namespace Clever.Win.Tumblr
             if (DataContext == null)
             {
                 DataContext = _viewModel = new MainViewModel();
-                await _viewModel.Load();
+                //await _viewModel.Load();
             }
         }
 

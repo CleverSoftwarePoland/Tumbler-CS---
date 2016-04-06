@@ -8,6 +8,11 @@ namespace Clever.Win.Tumblr.Services
 {
     public interface IPageGenerator
     {
-        string CreateWebPage(float font, string content, string title, string feedSource, string publishDate, string coverPhoto, string author);
+        string CreateWebPagPhotoDetails(float font, string title, string coverPhoto);
+        string CreateWebPagPhotoInfo(float font, string title, string coverPhoto);
+        string CreateWebPagRegularDetails(float font, string title, string item);
+        string CreateWebPagRegularInfo(float font, string title, string item);
+        string CreateWebPagVideoDetails(float font, string title, string videoItem);
+        string CreateWebPagVideoInfo(float font, string title, string videoItem);
     }
 }
